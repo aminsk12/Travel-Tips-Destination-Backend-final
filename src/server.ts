@@ -2,8 +2,8 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
 import config from "./config";
-//import { seed } from "./app/utils/seeding";
-//import { socketServer } from "./socketIoServer";
+import { seed } from "./app/utils/seeding";
+import { socketServer } from "./socketIoServer";
 
 let server: Server;
 
@@ -16,7 +16,7 @@ async function main() {
       console.log(`App is listening on port ${config.port}`);
     });
 
-   // socketServer(server);
+    socketServer(server);
   } catch (err) {
     console.log(err);
   }
