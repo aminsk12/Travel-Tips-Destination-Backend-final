@@ -6,8 +6,8 @@ export const sendEmail = async (to: string, resetLink: string) => {
     port: 587,
     secure: false,
     auth: {
-      user: "rijwanjannat36@gmail.com",
-      pass: "lych epuz scux pmkg",
+      user: "aminskeh786@gmail.com",
+      pass: "qqdv fwam izam yajx",
     },
   });
 

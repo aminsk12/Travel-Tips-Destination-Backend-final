@@ -13,7 +13,7 @@ import { postSearchFields } from "../Post/post.constants";
 
 const getAllUserFromDB = async (query: Record<string, any>) => {
   const usersQueryBuilder = new QueryBuilder(
-    User.find({ verified: false }),
+    User?.find({ verified: false }),
     query,
   )
     .fields()
@@ -33,7 +33,7 @@ const getAllUserFromDB = async (query: Record<string, any>) => {
 
 const getAllPremiumUserFromDB = async (query: Record<string, any>) => {
   const usersQueryBuilder = new QueryBuilder(
-    User.find({ verified: true }),
+    User?.find({ verified: true }),
     query,
   )
     .fields()
@@ -62,14 +62,14 @@ const getAllUserForAnalytics = async (query: Record<string, any>) => {
 };
 
 const getAlPremiumUserForAnalytics = async () => {
-  const result = await User.find({ verified: true });
+  const result = await User?.find({ verified: true });
   return result;
 };
 
 const updateUserStatus = async (id: string, payload: { status: string }) => {
-  const result = await User.findByIdAndUpdate(
+  const result = await User?.findByIdAndUpdate(
     id,
-    { status: payload.status },
+    { status: payload?.status },
     { new: true },
   );
 
@@ -81,7 +81,7 @@ const updateUserStatus = async (id: string, payload: { status: string }) => {
 };
 
 const updateUserRole = async (id: string, payload: { role: string }) => {
-  const result = await User.findByIdAndUpdate(
+  const result = await User?.findByIdAndUpdate(
     id,
     { role: payload.role },
     { new: true },
@@ -95,7 +95,7 @@ const updateUserRole = async (id: string, payload: { role: string }) => {
 };
 
 const getUserFromDB = async (id: string) => {
-  const result = await User.findById(id);
+  const result = await User?.findById(id);
 
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, "This user not found");
@@ -139,7 +139,7 @@ const followUser = async (
       throw new AppError(httpStatus.BAD_REQUEST, "You're already following");
     }
 
-    await user.save({ session });
+    await user?.save({ session });
     await followedUser.save({ session });
 
     // Commit the transaction
@@ -172,7 +172,7 @@ const unFollowUser = async (
     );
 
     const user = await User.findById(userObjectId).session(session);
-    const unFollowedUser = await User.findById(unFollowedUserObjectId).session(
+    const unFollowedUser = await User?.findById(unFollowedUserObjectId).session(
       session,
     );
 
@@ -204,7 +204,7 @@ const unFollowUser = async (
     session.endSession();
 
     return {
-      message: `You have unfollowed ${unFollowedUser.name}`,
+      message: `You have unfollowed ${unFollowedUser?.name}`,
     };
   } catch (error) {
     // If any error occurs, abort the transaction
@@ -219,13 +219,13 @@ const getSingleUserAllPostsFromDB = async (
   id: string,
   query: Record<string, any>,
 ) => {
-  const user = await User.findById(id);
+  const user = await User?.findById(id);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
 
-  if (user.status === USER_STATUS.BLOCKED) {
+  if (user?.status === USER_STATUS.BLOCKED) {
     throw new AppError(httpStatus.FORBIDDEN, "User is blocked");
   }
 

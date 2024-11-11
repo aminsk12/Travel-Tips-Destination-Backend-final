@@ -10,7 +10,7 @@ import config from "../../config";
 
 const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const token = req?.headers?.authorization;
 
     // checking if the token is missing
     if (!token) {
@@ -25,7 +25,7 @@ const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
     const { role, email, iat } = decoded;
 
     // checking if the user is exist
-    const user = await User.isUserExistsByEmail(email);
+    const user = await User?.isUserExistsByEmail(email);
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");

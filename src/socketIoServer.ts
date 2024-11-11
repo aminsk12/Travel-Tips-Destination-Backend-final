@@ -6,7 +6,9 @@ export const socketServer = (server: HttpServer): void => {
   const io = new SocketIoServer(server, {
     pingTimeout: 60000,
     cors: {
-      origin: "http://localhost:3000",
+      origin: ["https://travel-tips-destination-frontend.vercel.app",
+        "http://localhost:3000"
+      ],
       
       methods: ["GET", "POST"],
       credentials: true,

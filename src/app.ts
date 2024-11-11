@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import globalErrorHandler from "./app/middlewares/globalErrorhandler";
 import router from "./app/routes";
 import notFound from "./app/middlewares/notFound";
@@ -17,7 +17,9 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["https://travel-tips-destination-frontend.vercel.app",
+      "http://localhost:3000"
+    ],
 
 
     credentials: true, // Allow credentials to be sent
@@ -32,9 +34,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Global Error
-app.use(globalErrorHandler);
+app.use(globalErrorHandler as (err: any, req: Request, res: Response, next: NextFunction) => any);
 
 //Not Found
-app.use(notFound);
+app.use(notFound as (req: Request, res: Response, next: NextFunction) => any);
 
 export default app;
